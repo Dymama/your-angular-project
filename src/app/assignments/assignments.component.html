@@ -1,0 +1,163 @@
+<main class="container">
+  <br><br>
+  <div *ngIf="loading" style="color:blueviolet; size: 10px;">
+    Chargement veuillez patientez svp....
+    <mat-spinner></mat-spinner>
+  </div>
+<div class="row">
+  <div class="col-lg-6" style="border: 5px solid black; margin: 0px;" >
+    <h3>ASSIGNMENT NON RENDU</h3>
+    <div class="list"
+      cdkDropList
+      #assignmentTransmis
+      #assignments2List="cdkDropList"
+      [cdkDropListData]="assignments2"
+      [cdkDropListConnectedTo]="[assignments2List]"
+      (cdkDropListDropped)="onDrop($event)">
+    <div class="row">
+    <div class="col-sm-6" *ngFor="let a of assignments2  | paginate: { itemsPerPage: 4, currentPage: p1 }" cdkDrag>
+      <mat-card class="example-card" *ngIf="!a.rendu">
+        <mat-card-header>
+          <div mat-card-avatar><img src="{{a.enseignant_photo}}" width="50" height="50" style="border-radius: 100%;" />
+          </div>
+          <mat-card-title>{{a.nom}} | {{a.enseignant_nom}}</mat-card-title>
+          <mat-card-subtitle>Rendu le : <span class="fa fa-calendar">{{a.dateDeRendu | date}}</span> par <span
+              style="font-size: 18px; color: black;">{{a.auteur}}</span>
+            <span *ngIf="a.note > 0">
+              |  Note : {{a.note}} / 20
+            </span>
+          </mat-card-subtitle>
+        </mat-card-header>
+        <img mat-card-image src="{{a.image}}" alt="">
+        <mat-card-content>
+          <p>
+            {{a.remarques}}
+          </p>
+          <mat-list-item (click)="assignmentClique(a);">
+            <p appRendu *ngIf="a.rendu; else nonsoumis">
+              Rendu et noté<span class="dots"><i class="fa fa-check"></i></span>
+            </p>
+            <ng-template #nonsoumis>
+              <p [ngClass]="{nonrendu:true}">
+                Pas encore noté <span class="dots"><i class="fa fa-remove"></i></span></p>
+            </ng-template>
+            <mat-divider></mat-divider>
+          </mat-list-item>
+        </mat-card-content>
+        <mat-card-actions>
+          <a routerLink="/assignment/{{a.id}}"><button mat-button class="fa fa-success"><i
+                class="fa fa-eye"></i></button></a>
+          <a routerLink="assignment/{{a.id}}/edit"><button mat-button class="fa fa-success"><i
+                class="fa fa-pencil"></i></button></a>
+        </mat-card-actions>
+      </mat-card> 
+      <br>
+    </div>
+  </div>
+  <br>
+    <pagination-controls class="text-center" (pageChange)="p1 = $event"></pagination-controls>
+    <hr>
+  </div>
+</div>
+<div class="col-lg-6" style="border: 5px solid black; padding: 20px;" >
+    <h3>ASSIGNMENT RENDU</h3>
+  <div class="list"
+    cdkDropList
+    #assignments1List="cdkDropList"
+    #assignmentTransmis
+    [cdkDropListData]="assignments1"
+    [cdkDropListConnectedTo]="assignments1List"
+    (cdkDropListDropped)="onDrop($event)">
+    <div class="row">
+    <div class="col-sm-6" *ngFor="let a of assignments1  | paginate: { itemsPerPage: 4, currentPage: p2 }" cdkDrag>
+      <mat-card class="example-card" *ngIf="a.rendu">
+        <mat-card-header>
+          <div mat-card-avatar> <img src="{{a.enseignant_photo}}" width="50" height="50" style="border-radius: 100%;" />
+          </div>
+          <mat-card-title>{{a.nom}} | {{a.enseignant_nom}}</mat-card-title>
+          <mat-card-subtitle>Rendu le : <span class="fa fa-calendar">{{a.dateDeRendu | date}}</span> par <span
+              style="font-size: 18px; color: black;">{{a.auteur}}</span>
+            <span *ngIf="a.note > 0">
+              | Note : {{a.note}} / 20
+            </span>
+          </mat-card-subtitle>
+        </mat-card-header>
+        <img mat-card-image src="{{a.image}}" alt="">
+        <mat-card-content>
+          <p>
+            {{a.remarques}}
+          </p>
+          <mat-list-item (click)="assignmentClique(a);">
+            <p appRendu *ngIf="a.rendu; else nonsoumis">
+              Rendu et noté<span class="dots"><i class="fa fa-check"></i></span>
+            </p>
+            <ng-template #nonsoumis>
+              <p [ngClass]="{nonrendu:true}">
+                Pas encore noté <span class="dots"><i class="fa fa-remove"></i></span></p>
+            </ng-template>
+            <mat-divider></mat-divider>
+          </mat-list-item>
+        </mat-card-content>
+        <mat-card-actions>
+          <a  disabled><button mat-button class="fa fa-success" disabled><i
+                class="fa fa-eye"></i></button></a>
+          <a disabled><button mat-button class="fa fa-success" disabled><i
+                class="fa fa-pencil"></i></button></a>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+    
+  </div>
+  <br>
+  <pagination-controls class="text-center" (pageChange)="p2 = $event"></pagination-controls>
+  <hr>
+</div>
+</div>
+</div>
+</main>
+<footer>
+  <div class="jumbotron jumbotron-fluid bg-secondary p-4 mt-5 mb-0">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4 cizgi">
+          <div class="card bg-secondary border-0">
+            <div class="card-body text-light text-center">
+              <h5 class="card-title text-white display-4" style="font-size:30px">MBDS CI</h5>
+              <p class="d-inline lead">Gestion des assignments @mama_youan_ci<br>
+                <a href="#" class="text-light d-block lead">Année-acdemique 2020-2021</a>
+              </p>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 cizgi">
+          <div class="card bg-secondary border-0">
+            <div class="card-body text-center">
+              <h5 class="card-title text-white display-4" style="font-size:30px">Contacts</h5>
+              <a class="text-light d-block lead" style="margin-left: -20px" href="#"><i
+                  class="fa fa-phone mr-2"></i>(+225) 07 880 625 02</a>
+              <a class="text-light d-block lead" href="#"><i class="fa fa-envelope mr-2"></i>mamayoun@gmail.com</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
+          <div class="card bg-secondary border-0">
+            <div class="card-body text-center">
+              <h5 class="card-title text-white display-4" style="font-size:30px">Réseau sociaux</h5>
+
+              <a class="text-light" href="#"><i class="fa fa-facebook-square fa-fw fa-2x"></i></a>
+
+              <a class="text-light" href="#"><i class="fa fa-twitter-square fa-fw fa-2x"></i></a>
+
+              <a class="text-light" href="#"><i class="fa fa-instagram fa-fw fa-2x"></i></a>
+
+              <a class="text-light" href="#"><i class="fa fa-linkedin fa-fw fa-2x"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>

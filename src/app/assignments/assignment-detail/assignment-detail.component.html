@@ -1,0 +1,107 @@
+<div class="container py-3" *ngIf="assignmentTransmis">
+
+  <!-- Card Start -->
+  <div class="card">
+    <div class="row ">
+      <div class="col-md-7 px-3">
+        <div class="card-block px-6">
+          <div class="title h1 text-center">{{assignmentTransmis.nom}} | {{assignmentTransmis.enseignant_nom}} <img src="{{assignmentTransmis.enseignant_photo}}" style="border-radius: 100%;" width="50" height="50"></div>
+          <h4 class="card-title">Remarque :{{assignmentTransmis.remarques}}.</h4>
+          <p class="card-text">
+            <mat-list-item (click)="assignmentClique(assignmentTransmis);">
+           
+            <p><span style="color: black; font-size: 20px;" >{{assignmentTransmis.auteur}} </span>le <span class="fa fa-calendar"></span> {{assignmentTransmis.dateDeRendu | date}} | Note : {{assignmentTransmis.note}} / 20</p>
+            <p appRendu *ngIf="assignmentTransmis.rendu; else nonsoumis">
+              Rendu et noté<span class="dots"><i class="fa fa-check"></i></span>
+            </p>
+            <ng-template #nonsoumis>
+              <p [ngClass]="{nonrendu:true}">
+                Pas encore <span class="dots"><i class="fa fa-check"></i></span></p>
+            </ng-template>
+            <mat-divider></mat-divider>
+          </mat-list-item>
+         
+          <br>
+        </div>
+        
+      </div>
+      
+      <!-- Carousel start -->
+      <div class="col-md-5">
+        
+        <div id="CarouselTest" class="carousel slide" data-ride="carousel">
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <img  src="{{assignmentTransmis.image}}" alt="" width="500" height="300">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <mat-card *ngIf="assignmentTransmis">
+      <mat-card-title>{{assignmentTransmis.nom}}</mat-card-title>
+      <mat-card-subtitle>{{assignmentTransmis.dateDeRendu | date}}</mat-card-subtitle>
+      <div id="bottom">
+        <mat-checkbox *ngIf="!assignmentTransmis.rendu" (click)="onAssignmentRendu()">
+          Devoir rendu
+        </mat-checkbox>
+        <button mat-flat-button color="primary" [disabled]="!loggedIn()" (click)="onClickEdit()">
+          <i class="fa fa-pencil"></i> NOTER
+        </button>
+  
+        <button mat-flat-button color="warn" [disabled]="!loggedIn()"  (click)="onDelete()">
+          <i class="fa fa-trash"></i> SUPPRIMER
+        </button>
+      </div>
+    </mat-card>
+  </div>
+  <!-- End of card -->
+</div>
+<footer>
+  <div class="jumbotron jumbotron-fluid bg-secondary p-4 mt-5 mb-0">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4 cizgi">
+          <div class="card bg-secondary border-0">
+            <div class="card-body text-light text-center">
+              <h5 class="card-title text-white display-4" style="font-size:30px">MBDS CI</h5>
+            <p class="d-inline lead">Gestion des assignments @mama_youan_ci<br>
+            <a href="#" class="text-light d-block lead">Année-acdemique 2020-2021</a>
+            </p>
+
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 cizgi">
+          <div class="card bg-secondary border-0">
+            <div class="card-body text-center">
+              <h5 class="card-title text-white display-4" style="font-size:30px">Contacts</h5>
+              <a class="text-light d-block lead" style="margin-left: -20px" href="#"><i class="fa fa-phone mr-2"></i>(+225) 07 880 625 02</a>
+              <a class="text-light d-block lead" href="#"><i class="fa fa-envelope mr-2"></i>mamayoun@gmail.com</a>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
+          <div class="card bg-secondary border-0">
+            <div class="card-body text-center">
+            <h5 class="card-title text-white display-4" style="font-size:30px">Réseau sociaux</h5>
+        
+                <a class="text-light" href="#"><i class="fa fa-facebook-square fa-fw fa-2x"></i></a>
+              
+                <a class="text-light" href="#"><i class="fa fa-twitter-square fa-fw fa-2x"></i></a>
+              
+                <a class="text-light" href="#"><i class="fa fa-instagram fa-fw fa-2x"></i></a>
+              
+                <a class="text-light" href="#"><i class="fa fa-linkedin fa-fw fa-2x"></i></a>
+            </div>
+          </div>
+        </div>	
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+ 
